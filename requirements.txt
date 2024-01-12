@@ -1,0 +1,4 @@
+mailchimp_marketing==3.0.80
+pandas==2.1.4
+plotly_express==0.4.1
+streamlit==1.28.0
