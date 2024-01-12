@@ -37,7 +37,7 @@ def main_app():
 
     kpi4.metric(label='Target Sub Rate', value=(stats['target_sub_rate']),delta=(int(stats['avg_sub_rate'])/10), help='Target number of subcription per month')
     kpi5.metric(label='Member Count', value=(stats['member_count']), help='The Number of Active Members')
-    kpi6.metric(label='Campaign Count', value=(f" {stats['click_rate']:.2f}"))
+    kpi6.metric(label='Click Rate', value=(f" {stats['click_rate']:.2f}"))
 
     df1 = pd.read_csv(st.secrets['EXCEL_FILE'], encoding="ISO-8859-1")
 
