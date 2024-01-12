@@ -13,7 +13,7 @@ def main_app():
     )
 
     #Dashboard Title 
-    st.title('Real Time / Dashboard report mailchimp')
+    st.title('Dashboard report mailchimp for ecomondo exhbitors')
 
 
     kpi1, kpi2, kpi3 = st.columns(3)
