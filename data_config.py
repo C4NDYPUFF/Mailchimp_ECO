@@ -20,7 +20,7 @@ except ApiClientError as error:
 #     print(response['reports'][i]['id'],'and', response['reports'][i]['campaign_title'])
 
 try:
-    campaign_id = "1bfd5f7e18"  # Corrected campaign ID
+    campaign_id = "6948b8f083"  # Corrected campaign ID
     response = client.reports.get_campaign_report(campaign_id)
 except ApiClientError as error:
     print("Error: {}".format(error.text))
@@ -31,7 +31,7 @@ emails_sent = response['emails_sent']
 stats_campaing = response['list_stats']
 
 try:
-    list_id = "49668734bb"  # Corrected campaign ID
+    list_id = "e8f8d15f9f"  # Corrected campaign ID
     response = client.lists.get_list(list_id)
     # print(response)
 except ApiClientError as error:
