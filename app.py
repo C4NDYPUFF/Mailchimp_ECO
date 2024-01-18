@@ -2,6 +2,8 @@ import plotly_express as px
 import pandas as pd
 import streamlit as st
 from data_config import refresh_data
+import requests
+from io import StringIO
 
 def main_app():
     st.set_page_config(
@@ -54,7 +56,22 @@ def main_app():
         kpi5.metric(label='Member Count', value=stats['member_count'], help='The Number of Active Members')
         kpi6.metric(label='Click Rate', value=f"{stats['click_rate']:.2f}")
 
-        df1 = pd.read_csv(st.secrets['EXCEL_FILE'], encoding="ISO-8859-1")
+
+        # Set a user-agent header
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+        }
+
+        response = requests.get(st.secrets['EXCEL_FILE'], headers=headers)
+
+        if response.status_code == 200:
+            data = StringIO(response.text)
+            df1 = pd.read_csv(data)
+            # print(df)
+        else:
+            print(f"Failed to retrieve the file: HTTP Status Code {response.status_code}")
+
+        # df1 = pd.read_csv(st.secrets['EXCEL_FILE'], encoding="ISO-8859-1")
         df1 = df1[['Email Address', 'Member Rating', 'Opens', 'GROUP']]
 
         st.sidebar.header('Please Filter Here')
