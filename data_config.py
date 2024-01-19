@@ -18,9 +18,10 @@ def get_mailchimp_data():
         opens_metrics = response['opens']
         emails_sent = response['emails_sent']
         stats_campaing = response['list_stats']
+        clicks = response['clicks']
     except ApiClientError as error:
         st.error(f"Error fetching campaign data: {error.text}")
-        return None, None, None
+        return None, None, None , None
 
     try:
         list_id = "e8f8d15f9f"  # Example list ID
@@ -28,9 +29,9 @@ def get_mailchimp_data():
         stats = response1['stats']
     except ApiClientError as error:
         st.error(f"Error fetching list data: {error.text}")
-        return opens_metrics, emails_sent, stats_campaing, None
+        return opens_metrics, emails_sent, stats_campaing, clicks, None
 
-    return opens_metrics, emails_sent, stats_campaing, stats
+    return opens_metrics, emails_sent, stats_campaing, clicks, stats,
 
 def refresh_data():
     return get_mailchimp_data()

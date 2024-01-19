@@ -35,7 +35,7 @@ def main_app():
     if 'data_refreshed' not in st.session_state or st.session_state['data_refreshed']:
         try:
             # Unpack the returned values from refresh_data()
-            opens_metrics, emails_sent, stats_campaing, stats = refresh_data()
+            opens_metrics, emails_sent, stats_campaing, clicks, stats = refresh_data()
             clicks_table = email_list_data()
 
             # Assign each value to the session state
@@ -43,6 +43,7 @@ def main_app():
             st.session_state['emails_sent'] = emails_sent
             st.session_state['stats_campaing'] = stats_campaing
             st.session_state['stats'] = stats
+            st.session_state['clicks'] = clicks
 
             st.session_state['clicks_table'] = email_list_data()
             st.session_state['data_refreshed'] = False
@@ -61,6 +62,7 @@ def main_app():
         emails_sent = st.session_state['emails_sent']
         stats_campaing = st.session_state['stats_campaing']
         stats = st.session_state['stats']
+        clicks = st.session_state['clicks']
         clicks_table = st.session_state['clicks_table']
 
 
@@ -81,7 +83,7 @@ def main_app():
 
         kpi4.metric(label='Target Sub Rate', value=stats['target_sub_rate'], delta=int(stats['avg_sub_rate'])/10, help='Target number of subscription per month')
         kpi5.metric(label='Member Count', value=stats['member_count'], help='The Number of Active Members')
-        kpi6.metric(label='Clicks', value=f"{stats['click_rate']:.2f}")
+        kpi6.metric(label='Clicks', value=f"{clicks.get('clicks_total'):.2f}", help='Total of the clicks made by user')
 
         # st.sidebar.header('Please Filter Here')
 
