@@ -35,17 +35,18 @@ def main_app():
     if 'data_refreshed' not in st.session_state or st.session_state['data_refreshed']:
         try:
             # Unpack the returned values from refresh_data()
-            opens_metrics, emails_sent, stats_campaing, clicks, stats = refresh_data()
-            clicks_table = email_list_data()
+            opens_metrics, emails_sent, bounces, clicks, stats = refresh_data()
+            clicks_table, emails_clicked = email_list_data()
 
             # Assign each value to the session state
             st.session_state['opens_metrics'] = opens_metrics
             st.session_state['emails_sent'] = emails_sent
-            st.session_state['stats_campaing'] = stats_campaing
+            st.session_state['bounces'] = bounces
             st.session_state['stats'] = stats
             st.session_state['clicks'] = clicks
 
-            st.session_state['clicks_table'] = email_list_data()
+            st.session_state['clicks_table'] = clicks_table
+            st.session_state['emails_clicked'] = emails_clicked 
             st.session_state['data_refreshed'] = False
         except Exception as e:
             st.error(f"Error fetching data: {e}")
@@ -60,10 +61,11 @@ def main_app():
         # Access opens_metrics from st.session_state
         opens_metrics = st.session_state['opens_metrics']
         emails_sent = st.session_state['emails_sent']
-        stats_campaing = st.session_state['stats_campaing']
+        bounces = st.session_state['bounces']
         stats = st.session_state['stats']
         clicks = st.session_state['clicks']
         clicks_table = st.session_state['clicks_table']
+        emails_clicked = st.session_state['emails_clicked']
 
 
         kpi1.metric(label='Total Opens', value=opens_metrics['opens_total'], help='Emails open in the last campaign')
@@ -81,7 +83,7 @@ def main_app():
 
         kpi4, kpi5, kpi6 = st.columns(3)
 
-        kpi4.metric(label='Target Sub Rate', value=stats['target_sub_rate'], delta=int(stats['avg_sub_rate'])/10, help='Target number of subscription per month')
+        kpi4.metric(label='Bounce email', value=bounces.get('hard_bounces'), help='Number of teh emails that have been bounce')
         kpi5.metric(label='Member Count', value=stats['member_count'], help='The Number of Active Members')
         kpi6.metric(label='Clicks', value=f"{clicks.get('clicks_total'):.2f}", help='Total of the clicks made by user')
 
@@ -99,7 +101,9 @@ def main_app():
         # else:
         #     st.dataframe(clicks_table)
         st.title('Links that have been clicked')
-        st.dataframe(clicks_table)
+        st.dataframe(clicks_table, use_container_width=True)
+        st.title('Emails from the people that click')
+        st.dataframe(emails_clicked, use_container_width=True)
 
 # Run the main app function
 main_app()

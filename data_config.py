@@ -17,7 +17,7 @@ def get_mailchimp_data():
         response = client.reports.get_campaign_report(campaign_id)
         opens_metrics = response['opens']
         emails_sent = response['emails_sent']
-        stats_campaing = response['list_stats']
+        bounces = response['bounces']
         clicks = response['clicks']
     except ApiClientError as error:
         st.error(f"Error fetching campaign data: {error.text}")
@@ -29,9 +29,9 @@ def get_mailchimp_data():
         stats = response1['stats']
     except ApiClientError as error:
         st.error(f"Error fetching list data: {error.text}")
-        return opens_metrics, emails_sent, stats_campaing, clicks, None
+        return opens_metrics, emails_sent, bounces, clicks, None
 
-    return opens_metrics, emails_sent, stats_campaing, clicks, stats,
+    return opens_metrics, emails_sent, bounces, clicks, stats,
 
 def refresh_data():
     return get_mailchimp_data()
