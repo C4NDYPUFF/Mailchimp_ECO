@@ -106,6 +106,7 @@ def main_app():
         st.title('Links that have been clicked')
         st.dataframe(clicks_table, use_container_width=True)
         st.title('Emails from the people that click')
+        emails_clicked = emails_clicked.drop_duplicates(subset=['Email'])
         st.dataframe(emails_clicked, use_container_width=True)
 
 # Run the main app function
