@@ -44,11 +44,11 @@ def get_landing_info():
     try:
         # Establishing the connection
         connection = mysql.connector.connect(
-        host='143.255.58.210',
-        port=3306,
-        database = 'hfmexico_micrositios',
-        user = 'hfmexico_micrositios',
-        password = 'El]D.cE}?Yht'
+            host=st.secrets['HOST'],
+            port=3306,
+            database=st.secrets['DATABASE'],
+            user=st.secrets['USER'],
+            password= st.secrets['PASSWORD']
         )
 
         # Executing the query
