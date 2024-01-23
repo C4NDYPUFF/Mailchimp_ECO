@@ -41,16 +41,14 @@ def refresh_data():
     return get_mailchimp_data()
 
 def get_landing_info():
-    connection = None
-    cursor = None
     try:
         # Establishing the connection
         connection = mysql.connector.connect(
-            host=st.secrets['HOST'],
-            port=3306,
-            database=st.secrets['DATABASE'],
-            user=st.secrets['USER'],
-            password= st.secrets['PASSWORD']
+        host='143.255.58.210',
+        port=3306,
+        database = 'hfmexico_micrositios',
+        user = 'hfmexico_micrositios',
+        password = 'El]D.cE}?Yht'
         )
 
         # Executing the query
