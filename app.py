@@ -1,7 +1,7 @@
 import plotly_express as px
 import pandas as pd
 import streamlit as st
-from data_config import refresh_data
+from data_config import refresh_data, get_landing_info
 from data_email_list import merged_campaign_data
 import requests
 from io import StringIO
@@ -40,6 +40,7 @@ def main_app():
             # Unpack the returned values from refresh_data()
             opens_metrics, emails_sent, bounces, clicks, stats = refresh_data()
             clicks_table, emails_clicked = merged_campaign_data()
+            landing_info = get_landing_info()
 
             # Assign each value to the session state
             st.session_state['opens_metrics'] = opens_metrics
@@ -47,6 +48,7 @@ def main_app():
             st.session_state['bounces'] = bounces
             st.session_state['stats'] = stats
             st.session_state['clicks'] = clicks
+            st.session_state['landing_info'] = landing_info
 
             st.session_state['clicks_table'] = clicks_table
             st.session_state['emails_clicked'] = emails_clicked 
@@ -108,6 +110,10 @@ def main_app():
         st.title('Emails from the people that click')
         emails_clicked = emails_clicked.drop_duplicates(subset=['Email'])
         st.dataframe(emails_clicked, use_container_width=True)
+        st.title('Emails from the landing')
+        st.dataframe(landing_info, use_container_width=True)
+
+
 
 # Run the main app function
 main_app()

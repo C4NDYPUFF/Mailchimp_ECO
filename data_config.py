@@ -1,6 +1,10 @@
 import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing.api_client import ApiClientError
 import streamlit as st
+import mysql.connector
+from mysql.connector import Error
+import pandas as pd
+
 
 def get_mailchimp_data():
     api_key = st.secrets['API_KEY']
@@ -35,3 +39,36 @@ def get_mailchimp_data():
 
 def refresh_data():
     return get_mailchimp_data()
+
+def get_landing_info():
+    try:
+        # Establishing the connection
+        connection = mysql.connector.connect(
+            host=st.secrets['HOST'],
+            port=3306,
+            database=st.secrets['DATABASE'],
+            user=st.secrets['USER'],
+            password= st.secrets['PASSWORD']
+        )
+
+        # Executing the query
+        if connection.is_connected():
+            query = "SELECT * FROM ecomondo_landing_page;"
+            cursor = connection.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            column_names = [desc[0] for desc in cursor.description]
+
+            # Creating DataFrame from the fetched data
+            df = pd.DataFrame(rows, columns=column_names)
+            return df
+
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+        return pd.DataFrame()  # Returns an empty DataFrame in case of error
+
+    finally:
+        # Closing cursor and connection
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
