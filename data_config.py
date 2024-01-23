@@ -79,10 +79,10 @@ def get_landing_info() -> pd.DataFrame:
     """Fetch landing page data from the database"""
     
     with mysql.connector.connect(
-        host= '143.255.58.210',
-        database = 'hfmexico_micrositios',
-        user = 'hfmexico_micrositios',
-        password = 'El]D.cE}?Yht',
+        host= st.secrets['HOST'],
+        database = st.secrets['DATABASE'],
+        user = st.secrets['USER'],
+        password = st.secrets['PASSWORD'],
         # ... other config      
     ) as connection:
         with connection.cursor() as cursor:
