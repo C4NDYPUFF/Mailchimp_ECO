@@ -41,6 +41,8 @@ def refresh_data():
     return get_mailchimp_data()
 
 def get_landing_info():
+    connection = None
+    cursor = None
     try:
         # Establishing the connection
         connection = mysql.connector.connect(
@@ -64,7 +66,7 @@ def get_landing_info():
             return df
 
     except Error as e:
-        print("Error while connecting to MySQL", e.errno)
+        print("Error while connecting to MySQL", str(e))
         return pd.DataFrame() # Returns an empty DataFrame in case of error
 
     finally:
