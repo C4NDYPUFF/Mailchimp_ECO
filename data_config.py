@@ -40,37 +40,57 @@ def get_mailchimp_data():
 def refresh_data():
     return get_mailchimp_data()
 
-def get_landing_info():
-    connection = None
-    cursor = None
-    try:
-        # Establishing the connection
-        connection = mysql.connector.connect(
-            host=st.secrets['HOST'],
-            port=3306,
-            database=st.secrets['DATABASE'],
-            user=st.secrets['USER'],
-            password= st.secrets['PASSWORD']
-        )
+# def get_landing_info():
+#     connection = None
+#     cursor = None
+#     try:
+#         # Establishing the connection
+#         connection = mysql.connector.connect(
+#             host=st.secrets['HOST'],
+#             port=3306,
+#             database=st.secrets['DATABASE'],
+#             user=st.secrets['USER'],
+#             password= st.secrets['PASSWORD']
+#         )
 
-        # Executing the query
-        if connection.is_connected():
-            query = "SELECT * FROM ecomondo_landing_page;"
-            cursor = connection.cursor()
-            cursor.execute(query)
-            rows = cursor.fetchall()
-            column_names = [desc[0] for desc in cursor.description]
+#         # Executing the query
+#         if connection.is_connected():
+#             query = "SELECT * FROM ecomondo_landing_page;"
+#             cursor = connection.cursor()
+#             cursor.execute(query)
+#             rows = cursor.fetchall()
+#             column_names = [desc[0] for desc in cursor.description]
 
-            # Creating DataFrame from the fetched data
-            df = pd.DataFrame(rows, columns=column_names)
-            return df
+#             # Creating DataFrame from the fetched data
+#             df = pd.DataFrame(rows, columns=column_names)
+#             return df
 
-    except Error as e:
-        print("Error while connecting to MySQL", str(e))
-        return pd.DataFrame() # Returns an empty DataFrame in case of error
+#     except Error as e:
+#         print("Error while connecting to MySQL", str(e))
+#         return pd.DataFrame() # Returns an empty DataFrame in case of error
 
-    finally:
-        # Closing cursor and connection
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
+#     finally:
+#         # Closing cursor and connection
+#         if connection.is_connected():
+#             cursor.close()
+#             connection.close()
+
+def get_landing_info() -> pd.DataFrame:
+    """Fetch landing page data from the database"""
+    
+    with mysql.connector.connect(
+        host= '143.255.58.210',
+        database = 'hfmexico_micrositios',
+        user = 'hfmexico_micrositios',
+        password = 'El]D.cE}?Yht',
+        # ... other config      
+    ) as connection:
+        with connection.cursor() as cursor:
+            query = "SELECT * FROM ecomondo_landing_page;"        
+            try:
+                cursor.execute(query)
+                rows = cursor.fetchall()
+                return pd.DataFrame(rows)  
+            except mysql.connector.Error as e:
+                logger.error("Error fetching data: %s", str(e))
+                return pd.DataFrame() # empty DataFrame on failure
