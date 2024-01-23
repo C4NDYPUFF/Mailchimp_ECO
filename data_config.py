@@ -63,10 +63,10 @@ def get_landing_info():
             df = pd.DataFrame(rows, columns=column_names)
             return df
 
-    except Error as e:
-        print("Error while connecting to MySQL", e)
+    except mysql.connector.Error as err:
+        print("Error while connecting to MySQL", err)
         # return pd.DataFrame() # Returns an empty DataFrame in case of error
-        return print("Error while connecting to MySQL", e)
+        return print("Error while connecting to MySQL", err)
 
     finally:
         # Closing cursor and connection
