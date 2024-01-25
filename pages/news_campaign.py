@@ -14,7 +14,7 @@ ls_id2 = 'f481663a5f'
 
 
 
-def main_app():
+def additional_page():
     st.set_page_config(
         page_title='Real time Mailchimp Report',
         page_icon=':coffee:',
@@ -22,15 +22,15 @@ def main_app():
     )
 
     # Initialize session state for data refresh
-    if 'data_refreshed' not in st.session_state:
-        st.session_state['data_refreshed'] = False
+    if 'data_refreshed_2' not in st.session_state:
+        st.session_state['data_refreshed_2'] = False
 
     # Button for refreshing data
     if st.button('Refresh Data'):
-        st.session_state['data_refreshed'] = True
+        st.session_state['data_refreshed_2'] = True
 
     # Fetch data and update session state
-    if 'data_refreshed' not in st.session_state or st.session_state['data_refreshed']:
+    if 'data_refreshed_2' not in st.session_state or st.session_state['data_refreshed_2']:
         try:
             # Unpack the returned values from refresh_data()
             opens_metrics, emails_sent, bounces, clicks, stats = refresh_data(camp_id2, ls_id2)
@@ -38,16 +38,16 @@ def main_app():
             landing_info = get_landing_info()
 
             # Assign each value to the session state
-            st.session_state['opens_metrics'] = opens_metrics
-            st.session_state['emails_sent'] = emails_sent
-            st.session_state['bounces'] = bounces
-            st.session_state['stats'] = stats
-            st.session_state['clicks'] = clicks
-            st.session_state['landing_info'] = landing_info
+            st.session_state['opens_metrics_2'] = opens_metrics
+            st.session_state['emails_sent_2'] = emails_sent
+            st.session_state['bounces_2'] = bounces
+            st.session_state['stats_2'] = stats
+            st.session_state['clicks_2'] = clicks
+            st.session_state['landing_info_2'] = landing_info
 
-            st.session_state['clicks_table'] = clicks_table
-            st.session_state['emails_clicked'] = emails_clicked 
-            st.session_state['data_refreshed'] = False
+            st.session_state['clicks_table_2'] = clicks_table
+            st.session_state['emails_clicked_2'] = emails_clicked
+            st.session_state['data_refreshed_2'] = False
         except Exception as e:
             st.error(f"Error fetching data: {e}")
             return
@@ -56,16 +56,16 @@ def main_app():
     st.title('Dashboard report mailchimp for ecomondo exhibitors')
 
     # Ensure data is available before displaying
-    if 'opens_metrics' in st.session_state:
+    if 'opens_metrics_2' in st.session_state:
         kpi1, kpi2, kpi3 = st.columns(3)
         # Access opens_metrics from st.session_state
-        opens_metrics = st.session_state['opens_metrics']
-        emails_sent = st.session_state['emails_sent']
-        bounces = st.session_state['bounces']
-        stats = st.session_state['stats']
-        clicks = st.session_state['clicks']
-        clicks_table = st.session_state['clicks_table']
-        emails_clicked = st.session_state['emails_clicked']
+        opens_metrics = st.session_state['opens_metrics_2']
+        emails_sent = st.session_state['emails_sent_2']
+        bounces = st.session_state['bounces_2']
+        stats = st.session_state['stats_2']
+        clicks = st.session_state['clicks_2']
+        clicks_table = st.session_state['clicks_table_2']
+        emails_clicked = st.session_state['emails_clicked_2']
 
 
         kpi1.metric(label='Total Opens', value=opens_metrics['opens_total'], help='Emails open in the last campaign')
@@ -91,12 +91,12 @@ def main_app():
         st.title('Links that have been clicked')
         st.dataframe(clicks_table, use_container_width=True)
         st.title('Emails from the people that click')
-        emails_clicked = emails_clicked.drop_duplicates(subset=['Email'])
-        st.dataframe(emails_clicked, use_container_width=True)
+        emails_clicked_2 = emails_clicked_2.drop_duplicates(subset=['Email'])
+        st.dataframe(emails_clicked_2, use_container_width=True)
         st.title('Emails from the landing')
         st.dataframe(landing_info, use_container_width=True)
 
 
 
 # Run the main app function
-main_app()
+additional_page()
