@@ -6,10 +6,12 @@ from data_email_list import merged_campaign_data
 import requests
 from io import StringIO
 
-### Global variables 
 
-camp_id = '6948b8f083'
-ls_id = 'e8f8d15f9f'
+### Globals
+
+camp_id = 'b39e6761dc'
+ls_id = 'f481663a5f'
+
 
 
 def main_app():

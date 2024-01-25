@@ -6,7 +6,7 @@ from mysql.connector import Error
 import pandas as pd
 
 
-def get_mailchimp_data():
+def get_mailchimp_data(camp_id, ls_id):
     api_key = st.secrets['API_KEY']
     data_center = api_key.split('-')[-1]
 
@@ -17,7 +17,7 @@ def get_mailchimp_data():
     })
 
     try:
-        campaign_id = "6948b8f083"  # Example campaign ID
+        campaign_id = camp_id  # Example campaign ID
         response = client.reports.get_campaign_report(campaign_id)
         opens_metrics = response['opens']
         emails_sent = response['emails_sent']
@@ -28,7 +28,7 @@ def get_mailchimp_data():
         return None, None, None , None
 
     try:
-        list_id = "e8f8d15f9f"  # Example list ID
+        list_id = ls_id  # Example list ID
         response1 = client.lists.get_list(list_id)
         stats = response1['stats']
     except ApiClientError as error:
@@ -37,8 +37,8 @@ def get_mailchimp_data():
 
     return opens_metrics, emails_sent, bounces, clicks, stats,
 
-def refresh_data():
-    return get_mailchimp_data()
+def refresh_data(camp_id, ls_id):
+    return get_mailchimp_data(camp_id, ls_id)
 
 # def get_landing_info():
 #     connection = None
