@@ -9,8 +9,8 @@ from io import StringIO
 
 ### Globals
 
-camp_id = 'b39e6761dc'
-ls_id = 'f481663a5f'
+camp_id2 = 'b39e6761dc'
+ls_id2 = 'f481663a5f'
 
 
 
@@ -33,7 +33,7 @@ def main_app():
     if 'data_refreshed' not in st.session_state or st.session_state['data_refreshed']:
         try:
             # Unpack the returned values from refresh_data()
-            opens_metrics, emails_sent, bounces, clicks, stats = refresh_data(camp_id, ls_id)
+            opens_metrics, emails_sent, bounces, clicks, stats = refresh_data(camp_id2, ls_id2)
             clicks_table, emails_clicked = merged_campaign_data()
             landing_info = get_landing_info()
 
