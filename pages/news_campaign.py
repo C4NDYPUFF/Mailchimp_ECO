@@ -25,7 +25,7 @@ id_url2 = ['e9a6d414de',
 
 def additional_page():
     st.set_page_config(
-        page_title='News Letter Campaign',
+        page_title='Newsletter Campaign',
         page_icon=':coffee:',
         layout='wide'
     )
