@@ -12,6 +12,16 @@ camp_id = '6948b8f083'
 ls_id = 'e8f8d15f9f'
 
 
+id_url = ['be0f2e9d1a',
+        'f167932088',
+        '09f75c08c6',
+        '38acaadc01',
+        '0138607c14',
+        '1eccc839b5',
+        '1be18cbf8e',
+        '832823e8fe']
+
+
 def main_app():
     st.set_page_config(
         page_title='Real time Mailchimp Report',
@@ -32,7 +42,7 @@ def main_app():
         try:
             # Unpack the returned values from refresh_data()
             opens_metrics, emails_sent, bounces, clicks, stats = refresh_data(camp_id, ls_id)
-            clicks_table, emails_clicked = merged_campaign_data()
+            clicks_table, emails_clicked = merged_campaign_data(camp_id, id_url)
             landing_info = get_landing_info()
 
             # Assign each value to the session state

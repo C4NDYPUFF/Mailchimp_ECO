@@ -12,6 +12,15 @@ from io import StringIO
 camp_id2 = 'b39e6761dc'
 ls_id2 = 'f481663a5f'
 
+id_url2 = ['e9a6d414de',
+ '59aeea0c6a',
+ '257b67873e',
+ 'd1683d6fa1',
+ '4480a13acf',
+ '1f50c2ec34',
+ '6fed0c3237',
+ 'e563681523']
+
 
 
 def additional_page():
@@ -34,7 +43,7 @@ def additional_page():
         try:
             # Unpack the returned values from refresh_data()
             opens_metrics, emails_sent, bounces, clicks, stats = refresh_data(camp_id2, ls_id2)
-            clicks_table, emails_clicked = merged_campaign_data()
+            clicks_table, emails_clicked = merged_campaign_data(camp_id2, id_url2)
             landing_info = get_landing_info()
 
             # Assign each value to the session state
@@ -91,8 +100,8 @@ def additional_page():
         st.title('Links that have been clicked')
         st.dataframe(clicks_table, use_container_width=True)
         st.title('Emails from the people that click')
-        emails_clicked_2 = emails_clicked_2.drop_duplicates(subset=['Email'])
-        st.dataframe(emails_clicked_2, use_container_width=True)
+        emails_clicked = emails_clicked.drop_duplicates(subset=['Email'])
+        st.dataframe(emails_clicked, use_container_width=True)
         st.title('Emails from the landing')
         st.dataframe(landing_info, use_container_width=True)
 

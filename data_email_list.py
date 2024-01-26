@@ -6,8 +6,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 
-def merged_campaign_data():
-    campaign_id = "6948b8f083" 
+def merged_campaign_data(camp_id, id_url):
+    campaign_id = camp_id 
     api_key = st.secrets['API_KEY']
     # Initialize Mailchimp client
     data_center = api_key.split('-')[-1]
@@ -36,14 +36,6 @@ def merged_campaign_data():
         return None, None
 
     try:
-        id_url = ['be0f2e9d1a',
-        'f167932088',
-        '09f75c08c6',
-        '38acaadc01',
-        '0138607c14',
-        '1eccc839b5',
-        '1be18cbf8e',
-        '832823e8fe']
         # Fetch subscriber info
         data = []
         with ThreadPoolExecutor(max_workers=10) as executor:
