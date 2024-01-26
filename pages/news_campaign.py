@@ -25,7 +25,7 @@ id_url2 = ['e9a6d414de',
 
 def additional_page():
     st.set_page_config(
-        page_title='Real time Mailchimp Report',
+        page_title='News Letter Campaign',
         page_icon=':coffee:',
         layout='wide'
     )
@@ -62,7 +62,7 @@ def additional_page():
             return
 
     # Dashboard Title
-    st.title('Dashboard report mailchimp for ecomondo exhibitors')
+    st.title('Ecomondo Newsletter Mailchimp Report')
 
     # Ensure data is available before displaying
     if 'opens_metrics_2' in st.session_state:
