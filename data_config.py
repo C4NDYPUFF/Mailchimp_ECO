@@ -90,7 +90,9 @@ def get_landing_info() -> pd.DataFrame:
             try:
                 cursor.execute(query)
                 rows = cursor.fetchall()
-                return pd.DataFrame(rows)  
+                # Get the column names from the cursor's description
+                column_names = [desc[0] for desc in cursor.description]
+                return pd.DataFrame(rows, columns=column_names)  
             except mysql.connector.Error as e:
                 logger.error("Error fetching data: %s", str(e))
                 return pd.DataFrame() # empty DataFrame on failure
